@@ -1,0 +1,32 @@
+.formRow {
+    margin-top: .75rem;
+}
+
+.formRowCenter {
+    margin-top: .75rem;
+    text-align: center;
+}
+
+.formLabel {
+    font-size: small;
+    font-weight: bold;
+}
+
+.formInput {
+    margin-top: .75rem;
+    width: 20rem;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    font-size: large;
+}
+
+.onboardSubmitButton {
+    background-color: rgb(30, 147, 225);
+    font-size: medium;
+    font-weight: bold;
+    border: 0;
+    color: white;
+    padding: .3rem;
+    margin-top: 2em;
+}

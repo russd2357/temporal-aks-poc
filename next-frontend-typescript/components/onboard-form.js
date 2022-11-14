@@ -1,0 +1,90 @@
+import  Container  from "./container";
+import styles from "../styles/onboard.module.css";
+import { PatientInfo } from "../temporal/models";
+import fetch, { Headers } from "node-fetch";
+
+export default function OnboardForm() {
+
+    const launchWorkflow = async (event) => {
+        event.preventDefault();
+        const firstName = event.target.firstName.value;
+        const lastName = event.target.lastName.value;
+        const email = event.target.email.value;
+        const phone = event.target.phone.value;
+
+        let patientinfo = {
+            name: `${firstName} ${lastName}`,
+            email: email,
+            phone: phone
+        };
+
+        // TODO - Change to API request
+        const res = await fetch('http://localhost:3000/api/run-workflow', {
+            body: JSON.stringify(patientinfo),
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }),
+        });
+
+        let msgclone = res.clone();
+        let cloneReader = msgclone.body.getReader();
+
+        let td = new TextDecoder();
+        let codedArr = await cloneReader.read();
+        let jsontxt = td.decode(codedArr.value);
+        
+        let ret = JSON.parse(jsontxt);
+
+        if (res.status == 200) {
+            
+            alert(`Workflow started workflow id: ${ret.workflowId}`);
+        }
+        else if (res.status == 500)
+        {
+            
+            alert(ret.error);
+        }
+        else {
+            alert(`Unknown error status ${res.status}`);
+        }
+
+    }
+
+    return (
+        <Container>
+        <form onSubmit={launchWorkflow} >
+            <div>
+                <input className={styles.formInput} type="text" id="firstName" />
+            </div>
+            <div className={styles.formLabel}>
+                <label htmlFor="firstName">First Name</label>
+            </div>
+            <div>
+                <input className={styles.formInput} type='text' id="lastName" />
+            </div>
+            <div className={styles.formLabel}>
+                <label htmlFor="lastName">Last Name</label>
+            </div>
+            <div>
+                <input className={styles.formInput} type='text' id='email' />
+            </div>
+            <div className={styles.formLabel}>
+                <label htmlFor="email">Email</label>
+            </div>
+            <div>
+                <input className={styles.formInput} type='text' id='phone' />
+            </div>
+            <div className={styles.formLabel}>
+                <label htmlFor="phone">Phone</label>
+            </div>
+            <div  className={styles.formRowCenter}>
+                <button className={styles.onboardSubmitButton} type="submit"><span className="buttonText">Submit</span></button>
+            </div>
+        </form>
+        </Container>
+
+    )
+};
+
