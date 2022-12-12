@@ -3,6 +3,7 @@ export interface PatientInfo {
     address1: string,
     address2: string,
     email: string,
-    phone: string
+    phone: string,
+    contactpref: string
 
 }

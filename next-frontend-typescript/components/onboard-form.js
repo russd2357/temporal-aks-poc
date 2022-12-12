@@ -11,11 +11,13 @@ export default function OnboardForm() {
         const lastName = event.target.lastName.value;
         const email = event.target.email.value;
         const phone = event.target.phone.value;
+        const contactpref = event.target.contactpref.value;
 
         let patientinfo = {
             name: `${firstName} ${lastName}`,
             email: email,
-            phone: phone
+            phone: phone,
+            contactPref: contactpref
         };
 
         // TODO - Change to API request
@@ -78,6 +80,18 @@ export default function OnboardForm() {
             </div>
             <div className={styles.formLabel}>
                 <label htmlFor="phone">Phone</label>
+            </div>
+            <div className={styles.formRowCenter}>
+                <div className={styles.formLabel}>
+                    <label htmlFor="contactpref">Preferred Contact Method</label>
+                </div>
+                <div>
+                    <label htmlFor="emailpref">Email</label>
+                    <input type="radio" name="contactpref" id="emailpref" value="Email" />
+                    <span className={styles.formLabelNoBold}></span>
+                    <label htmlFor="emailpref">Phone</label>
+                    <input type="radio" name="contactpref" id="phonepref" value="Phone" />
+                </div>
             </div>
             <div  className={styles.formRowCenter}>
                 <button className={styles.onboardSubmitButton} type="submit"><span className="buttonText">Submit</span></button>

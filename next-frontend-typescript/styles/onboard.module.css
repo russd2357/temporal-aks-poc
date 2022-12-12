@@ -12,6 +12,11 @@
     font-weight: bold;
 }
 
+.formLabelNoBold {
+    font-size: small;
+    margin-left: .75rem;
+}
+
 .formInput {
     margin-top: .75rem;
     width: 20rem;
