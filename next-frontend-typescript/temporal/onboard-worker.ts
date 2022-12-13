@@ -4,8 +4,7 @@ import * as activities from './onboard-activities';
 async function run() {
   // Step 0: 
   const connection = await NativeConnection.connect({
-    address: '51.143.61.84',
-    tls: {}       // TODO: When you are reeady for TLS, provide a TLSConfig here
+    address: '51.143.61.84'
   });
 
   // Step 1: Register Workflows and Activities with the Worker and connect to
