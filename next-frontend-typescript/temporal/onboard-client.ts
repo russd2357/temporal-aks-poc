@@ -6,12 +6,13 @@ import { nanoid } from 'nanoid';
 
 async function run() {
   // Connect to the default Server location (localhost:7233)
-  const connection = await Connection.connect();
-  // In production, pass options to configure TLS and other settings:
-  // {
-  //   address: 'foo.bar.tmprl.cloud',
-  //   tls: {}
-  // }
+  const connection = await Connection.connect(
+    // In production, pass options to configure TLS and other settings:
+    {
+      address: '51.143.61.84',
+      tls: {}
+    }
+    );
 
   const client = new WorkflowClient({
     connection,

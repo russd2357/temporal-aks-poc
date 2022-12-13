@@ -1,11 +1,18 @@
-import { Worker } from '@temporalio/worker';
+import { Worker, NativeConnection } from '@temporalio/worker';
 import * as activities from './onboard-activities';
 
 async function run() {
+  // Step 0: 
+  const connection = await NativeConnection.connect({
+    address: '51.143.61.84',
+    tls: {}       // TODO: When you are reeady for TLS, provide a TLSConfig here
+  });
+
   // Step 1: Register Workflows and Activities with the Worker and connect to
   // the Temporal server.
   const worker = await Worker.create({
-    workflowsPath: require.resolve('./onboard-workflow'),
+    connection: connection,
+    workflowsPath: require.resolve('./workflows'),
     activities,
     taskQueue: 'onboard',
   });
