@@ -42,17 +42,18 @@ async function run() {
 
 export async function runWorkflow(patientInfo: PatientInfo) {
     // Connect to the default Server location (localhost:7233)
-    const connection = await Connection.connect();
-    // In production, pass options to configure TLS and other settings:
-    // {
-    //   address: 'foo.bar.tmprl.cloud',
-    //   tls: {}
-    // }
-  
-    const client = new WorkflowClient({
-      connection,
-      // namespace: 'foo.bar', // connects to 'default' namespace if not specified
-    });
+    const connection = await Connection.connect(
+      // In production, pass options to configure TLS and other settings:
+      {
+        address: '51.143.61.84',
+        tls: {}
+      }
+      );
+    
+      const client = new WorkflowClient({
+        connection,
+        // namespace: 'foo.bar', // connects to 'default' namespace if not specified
+      });
     
     const handle = await client.start(onboard, {
       // type inference works! args: [name: string]
