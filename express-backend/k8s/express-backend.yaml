@@ -1,0 +1,76 @@
+apiVersion: v1
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o k8s/express-backend.yaml
+        kompose.service.type: loadbalancer
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: express-backend
+      name: express-backend
+    spec:
+      ports:
+        - name: "9099"
+          port: 9099
+          targetPort: 9099
+      selector:
+        io.kompose.service: express-backend
+      type: LoadBalancer
+    status:
+      loadBalancer: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o k8s/express-backend.yaml
+        kompose.service.type: loadbalancer
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: express-backend
+      name: express-backend
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: express-backend
+      strategy: {}
+      template:
+        metadata:
+          annotations:
+            kompose.cmd: kompose convert -f docker-compose.yml -o k8s/express-backend.yaml
+            kompose.service.type: loadbalancer
+            kompose.version: 1.22.0 (955b78124)
+          creationTimestamp: null
+          labels:
+            io.kompose.network/backend-network: "true"
+            io.kompose.service: express-backend
+        spec:
+          containers:
+            - image: pinaruss/temporal-demo-backend
+              name: express-backend
+              ports:
+                - containerPort: 9099
+              resources: {}
+          restartPolicy: Always
+    status: {}
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      creationTimestamp: null
+      name: backend-network
+    spec:
+      ingress:
+        - from:
+            - podSelector:
+                matchLabels:
+                  io.kompose.network/backend-network: "true"
+      podSelector:
+        matchLabels:
+          io.kompose.network/backend-network: "true"
+kind: List
+metadata: {}
+
