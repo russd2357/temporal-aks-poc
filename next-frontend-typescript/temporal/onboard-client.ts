@@ -45,7 +45,7 @@ export async function runWorkflow(patientInfo: PatientInfo) {
     const connection = await Connection.connect(
       // In production, pass options to configure TLS and other settings:
       {
-        address: '51.143.61.84',
+        address: 'http://51.143.61.84:7233',
         tls: {}
       }
       );

@@ -46,7 +46,7 @@ export default function OnboardForm() {
         else if (res.status == 500)
         {
             
-            alert(ret.error);
+            alert(ret.message);
         }
         else {
             alert(`Unknown error status ${res.status}`);

@@ -1,33 +1,40 @@
-# base image
-FROM node:14.18 as development
+#FROM node:14.18 as development
+FROM ubuntu:20.04 as development
 
-# setup working direc
-WORKDIR /app
+WORKDIR /usr/src/app
+
+COPY package*.json .
+
+# install node
+RUN apt-get update
+RUN apt-get install -y curl gnupg
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs
 
 # get dependencies
-COPY ./src/package*.json .
-
 RUN npm install
 
-# get source code
 COPY . .
 
 RUN npm run build
 
-FROM node:14.18 as production
+#FROM node:14.18 as production
+FROM ubuntu:20.04 as production
 
 ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_DEV}
+ENV MODE_ENV=${NODE_ENV}
 
-# setup working direc
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# get dependencies
-COPY ./src/package*.json .
+COPY package*.json .
+
+# install node
+RUN apt-get update
+RUN apt-get install -y curl gnupg
+RUN curl -sL https://deb.nodesource.com/setup_14.18  | bash -
+RUN apt-get -y install nodejs
 
 RUN npm install --only=production
 
-COPY --from=development /app/dist ./dist
+COPY --from=development /usr/src/app/dist ./dist
 
-# run the worker
-CMD ["node", "./dist/onbworker.js"]
+CMD ["node", "dist/onbworker.js"]

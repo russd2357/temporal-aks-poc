@@ -7,7 +7,7 @@ export async function greet(name: string): Promise<string> {
 
 export async function assignDoctor() : Promise<string> {
   let ret = "Bogons in sight shields down!";
-  const response = await fetch('http://localhost:9099/onboard/doctor', {
+  const response = await fetch('http://20.99.160.16:9099/onboard/doctor', {
     method: "POST"
   });
 
@@ -23,7 +23,7 @@ export async function assignDoctor() : Promise<string> {
 
 export async function assignHospital() : Promise<string> {
   let ret = "Bogons in sight shields down!";
-  const response = await fetch('http://localhost:9099/onboard/hospital', {
+  const response = await fetch('http://20.99.160.16:9099/onboard/hospital', {
     method: "POST"
   });
 
@@ -44,7 +44,7 @@ export async function notifyPatient(contactinfo: string) : Promise<string> {
   // encodeURIComponent doesn't encode parentheses so we have to do those ourselves
   fmtContactInfo = fmtContactInfo.replace('(', '&#40').replace(')', '&#41');
 
-  const response = await fetch('http://localhost:9099/onboard/notify?${fmtContactInfo}', {
+  const response = await fetch('http://20.99.160.16:9099/onboard/notify?${fmtContactInfo}', {
     method: "POST"
   });
 

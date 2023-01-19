@@ -12,6 +12,8 @@ async function run() {
   }
   );
 
+  console.log('connected')
+
   const client = new WorkflowClient({
     connection,
     // namespace: 'foo.bar', // connects to 'default' namespace if not specified
@@ -22,7 +24,8 @@ async function run() {
     address1: '114 Duncan Rd',
     address2: '',
     email: 'hjones@foo.bar.com',
-    phone: '(713) 555-1212'
+    phone: '(713) 555-1212',
+    contactPref: 'Phone'
   } as PatientInfo;
 
   const handle = await client.start(onboard, {

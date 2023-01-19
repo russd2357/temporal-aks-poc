@@ -1,12 +1,12 @@
 # temporal-aks-poc
 
 ## Temporal Demo Running on AKS
-This project demonstrates how to set up a Temporal cluster on AKS with code to define a Temporal workflow and a Next JS frontend to kick off the workflow. The sample workflow emulates a patient onboarding workflow where that executes the workflow by calling a set of external service APIs.
+This project demonstrates how to set up a Temporal cluster on AKS with code to define a Temporal workflow and a Next JS frontend to kick off the workflow. The sample workflow emulates a patient onboarding workflow which is executed by calling a set of external APIs in the workflow activites.
 
 Here is a brief description of the components
 
 ### express-backend ###
-This is a simple NodeJS Express project to implment the backend service APIs.
+This is a simple NodeJS Express project to model backend service APIs used in the workflow.
 
 ### demo-app ###
 This is a derived from the Temporal [hello-world](https://github.com/temporalio/samples-typescript/tree/main/hello-world) sample Typescript app.
