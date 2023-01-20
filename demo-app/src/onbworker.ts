@@ -15,7 +15,7 @@ async function run() {
   // If you need to configure server connection parameters, see docs:
   // https://docs.temporal.io/typescript/security#encryption-in-transit-with-mtls
 
-  // Step 2: Start accepting tasks on the `hello-world` queue
+  // Step 2: Start accepting tasks on the `onboard` queue
   await worker.run();
 }
 
