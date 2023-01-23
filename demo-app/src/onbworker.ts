@@ -11,7 +11,7 @@ async function run() {
   // the Temporal server.
   const worker = await Worker.create({
     connection: connection,
-    workflowsPath: require.resolve('./workflows'),
+    workflowsPath: require.resolve('./onboard-workflow'),
     activities,
     taskQueue: 'onboard',
   });

@@ -43,11 +43,10 @@ async function run() {
 export async function runWorkflow(patientInfo: PatientInfo) {
     // Connect to the default Server location (localhost:7233)
     const connection = await Connection.connect(
-      // In production, pass options to configure TLS and other settings:
-      {
-        address: 'http://51.143.61.84:7233',
-        tls: {}
-      }
+        // In production, pass options to configure TLS and other settings:
+        {
+          address: '51.143.61.84'
+        }
       );
     
       const client = new WorkflowClient({

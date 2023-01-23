@@ -6,10 +6,9 @@ async function run() {
   // Connect to the default Server location (localhost:7233)
   const connection = await Connection.connect(
   // In production, pass options to configure TLS and other settings:
-  {
-    address: '51.143.61.84',
-    tls: {}
-  }
+    {
+      address: '51.143.61.84'
+    }
   );
 
   console.log('connected')
