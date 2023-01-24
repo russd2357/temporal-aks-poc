@@ -9,12 +9,12 @@ Here is a brief description of the components
 This is a simple NodeJS Express project to model backend service APIs used in the workflow.
 
 ### demo-app ###
-This is a derived from the Temporal [hello-world](https://github.com/temporalio/samples-typescript/tree/main/hello-world) sample Typescript app.
+This is a derived from the Temporal [hello-world](https://github.com/temporalio/samples-typescript/tree/main/hello-world) sample Typescript app. I used this primarily to buld the Temporal worker service for the demo, but you can use the client for testing.
 
 ### next-frontend-typescript ###
 A Next JS frontend app to implement the form for kicking off workflows.
 
 ### terraform ###
-Contains the Terraform definition for standing up the Temporal cluster and worker fleet on AKS
+Contains the Terraform definition for standing up an AKS cluster for hosting in Azure.
 
 
