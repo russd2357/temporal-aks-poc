@@ -1,0 +1,11 @@
+version: "3.5"
+
+services:
+  onboard-worker:
+    build:
+      context: .
+      target: production
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    command: node ./dist/onbworker.js
