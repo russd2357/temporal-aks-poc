@@ -1,5 +1,4 @@
 version: "3.5"
-
 services:
   onboard-worker:
     build:
@@ -9,3 +8,10 @@ services:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
     command: node ./dist/onbworker.js
+    labels:
+      kompose.volume.type: configMap
+      kompose.service.type: headless
+networks:
+  temporal-worker-network:
+    driver: bridge
+    name: temporal-network
