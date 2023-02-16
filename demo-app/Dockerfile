@@ -8,7 +8,7 @@ COPY package*.json .
 # install node
 RUN apt-get update
 RUN apt-get install -y curl gnupg
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs
 
 # get dependencies
 RUN npm install
@@ -30,8 +30,7 @@ COPY package*.json .
 # install node
 RUN apt-get update
 RUN apt-get install -y curl gnupg
-RUN curl -sL https://deb.nodesource.com/setup_14.18  | bash -
-RUN apt-get -y install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash - && apt-get -y install nodejs
 
 RUN npm install --only=production
 

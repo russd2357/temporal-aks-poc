@@ -11,7 +11,11 @@ services:
     labels:
       kompose.volume.type: configMap
       kompose.service.type: headless
+    networks:
+      - temporal-worker-network
+    stdin_open: true
+    tty: true
 networks:
   temporal-worker-network:
     driver: bridge
-    name: temporal-network
+    name: temporal-worker-network
