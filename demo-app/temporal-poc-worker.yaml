@@ -1,0 +1,74 @@
+apiVersion: v1
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ./docker-compose-onboard.yml -o ./temporal-poc-worker.yaml
+        kompose.service.type: headless
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: onboard-worker
+      name: onboard-worker
+    spec:
+      clusterIP: None
+      ports:
+        - name: headless
+          port: 55555
+          targetPort: 0
+      selector:
+        io.kompose.service: onboard-worker
+    status:
+      loadBalancer: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ./docker-compose-onboard.yml -o ./temporal-poc-worker.yaml
+        kompose.service.type: headless
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: onboard-worker
+      name: onboard-worker
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: onboard-worker
+      strategy: {}
+      template:
+        metadata:
+          annotations:
+            kompose.cmd: kompose convert -f ./docker-compose-onboard.yml -o ./temporal-poc-worker.yaml
+            kompose.service.type: headless
+            kompose.version: 1.22.0 (955b78124)
+          creationTimestamp: null
+          labels:
+            io.kompose.network/temporal-worker-network: "true"
+            io.kompose.service: onboard-worker
+        spec:
+          containers:
+            - image: pinaruss/onboard-worker
+              name: onboard-worker
+              resources: {}
+          restartPolicy: Always
+    status: {}
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      creationTimestamp: null
+      name: temporal-worker-network
+    spec:
+      ingress:
+        - from:
+            - podSelector:
+                matchLabels:
+                  io.kompose.network/temporal-worker-network: "true"
+      podSelector:
+        matchLabels:
+          io.kompose.network/temporal-worker-network: "true"
+kind: List
+metadata: {}
+
