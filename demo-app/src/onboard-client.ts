@@ -3,7 +3,7 @@ import { onboard, PatientInfo } from './onboard-workflow';
 import { nanoid } from 'nanoid';
 
 async function run() {
-  // Connect to the default Server location (localhost:7233)
+  // Comment this out to connect to the default Server location (localhost:7233)
   const connection = await Connection.connect(
   // In production, pass options to configure TLS and other settings:
     {
