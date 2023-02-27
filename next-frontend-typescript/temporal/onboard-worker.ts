@@ -4,6 +4,7 @@ import * as activities from './onboard-activities';
 async function run() {
   // Step 0: 
   const connection = await NativeConnection.connect({
+    // TODO - Add service discovery for the Temporal services to circumvent need for hardcoded IP address
     address: '51.143.61.84'
   });
 

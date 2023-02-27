@@ -41,10 +41,11 @@ async function run() {
 }
 
 export async function runWorkflow(patientInfo: PatientInfo) {
-    // Connect to the default Server location (localhost:7233)
+    // Connect to the Temporal service running in AKS
     const connection = await Connection.connect(
         // In production, pass options to configure TLS and other settings:
         {
+          // TODO - Add service discovery for the Temporal services to circumvent need for hardcoded IP address
           address: '51.143.61.84'
         }
       );
