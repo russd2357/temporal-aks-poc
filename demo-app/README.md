@@ -1,7 +1,6 @@
 # Demo App
 
-This is derived from the Temporal [Hello World Tutorial](https://docs.temporal.io/typescript/hello-world/) but has been modified to model a sample workflow that should be familiar if you watched this [instructional video on Temporal workflows](https://www.youtube.com/watch?v=23rX78xqYUg). Unlike the video, though this demo is built using the Typescript SDK for Temporal.
-
+This app implements a Temporal worker service for a sample workflow that should be familiar if you watched this [instructional video on Temporal workflows](https://www.youtube.com/watch?v=23rX78xqYUg). Unlike the video, though this demo is built using the Typescript SDK for Temporal.
 
 ### Containerization 
 
@@ -13,6 +12,8 @@ In order to reduce the size of the container image, the Dockerfile uses multiple
 
 `docker build --no-cache -t onboard-worker .`
 
-Once you've built the container, make a simple Docker Compose file for the service. Then you can use [kompose](https://kompose.io) to convert the Docker Compose file into a Kubernetes manifest.
+After you build the container, you need to push it to [Docker Hub](hub.docker.com) or you can create an Azure Container Registry for Kubernetes to pull the image from. 
+
+Once you've built the container, make a simple Docker Compose file for the service. Then you can use [kompose](https://kompose.io) to convert the Docker Compose file into a Kubernetes manifest file.
 
 `kompose convert -f docker-compose-onboard.yml -o temporal-poc-worker.yaml
