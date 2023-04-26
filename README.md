@@ -1,5 +1,7 @@
 # temporal-aks-poc
 
+## DISCLAIMER - THIS IS A WORK IN PROGRESS. IT IS ALSO INTENDED FOR DEMO PURPOSES ONLY. DO NOT USE IN PRODUCTION ##
+
 ## Temporal Demo Running on AKS
 This project demonstrates how to set up a Temporal cluster on AKS with code to define a Temporal workflow and a Next JS frontend to kick off the workflow. The sample workflow emulates a patient onboarding workflow which is executed by calling a set of external APIs in the workflow activites.
 
