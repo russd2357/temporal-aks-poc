@@ -1,0 +1,14 @@
+version: "3.5"
+services:
+  temporal-frontend:
+    image: pinaruss/onboard-frontend
+    networks:
+      - frontend-network
+    ports:
+      - "3000:3000"
+    labels:
+      kompose.service.type: loadbalancer
+networks:
+  backend-network:
+    driver: bridge
+    name: frontend-network

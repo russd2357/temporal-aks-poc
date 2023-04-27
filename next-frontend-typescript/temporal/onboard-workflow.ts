@@ -25,7 +25,7 @@ export async function onboard(patientInfo: PatientInfo) : Promise<string> {
     sleep(5000);
     console.log(`Patient assigned to doctor: ${doctorName}`);
 
-    let contactMethod = patientInfo.contactpref.toLowerCase();
+    let contactMethod = patientInfo.contactPref.toLowerCase();
     let msg = '';
     if (contactMethod === 'phone') {
       msg = await notifyPatient(patientInfo.phone);

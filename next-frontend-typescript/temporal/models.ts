@@ -4,6 +4,6 @@ export interface PatientInfo {
     address2: string,
     email: string,
     phone: string,
-    contactpref: string
+    contactPref: string
 
 }

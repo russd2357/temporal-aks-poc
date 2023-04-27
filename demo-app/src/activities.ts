@@ -7,7 +7,14 @@ export async function greet(name: string): Promise<string> {
 
 export async function assignDoctor() : Promise<string> {
   let ret = "Bogons in sight shields down!";
-  const response = await fetch('http://localhost:9099/onboard/doctor', {
+  
+  // NOTE - This example uses the DNS service in the AKS cluster for service discovery
+  //        For the demo the backend service is deployed to the same cluster as the frontend service.
+  //        The DNS service is not available outside of the cluster. The service naming
+  //        convention is <service-name>.<namespace>.svc.cluster.local
+
+  const response = await fetch('http://40.64.83.248:9099/onboard/doctor', {
+  //const response = await fetch('http://express-backend.backend.svc.cluster.local:9099/onboard/doctor', {
     method: "POST"
   });
 
@@ -23,7 +30,14 @@ export async function assignDoctor() : Promise<string> {
 
 export async function assignHospital() : Promise<string> {
   let ret = "Bogons in sight shields down!";
-  const response = await fetch('http://localhost:9099/onboard/hospital', {
+  
+  // NOTE - This example uses the DNS service in the AKS cluster for service discovery
+  //        For the demo the backend service is deployed to the same cluster as the frontend service.
+  //        The DNS service is not available outside of the cluster. The service naming
+  //        convention is <service-name>.<namespace>.svc.cluster.local
+
+  const response = await fetch('http://40.64.83.248:9099/onboard/hospital', {
+  //const response = await fetch('http://express-backend.backend.svc.cluster.local:9099/onboard/hospital', {
     method: "POST"
   });
 
@@ -43,8 +57,14 @@ export async function notifyPatient(contactinfo: string) : Promise<string> {
 
   // encodeURIComponent doesn't encode parentheses so we have to do those ourselves
   fmtContactInfo = fmtContactInfo.replace('(', '&#40').replace(')', '&#41');
+  
+  // NOTE - This example uses the DNS service in the AKS cluster for service discovery
+  //        For the demo the backend service is deployed to the same cluster as the frontend service.
+  //        The DNS service is not available outside of the cluster. The service naming
+  //        convention is <service-name>.<namespace>.svc.cluster.local
 
-  const response = await fetch('http://localhost:9099/onboard/notify?${fmtContactInfo}', {
+  const response = await fetch('http://40.64.83.248:9099/onboard/notify?${fmtContactInfo}', {
+  //const response = await fetch('http://express-backend.backend.svc.cluster.local:9099/onboard/notify?${fmtContactInfo}', {
     method: "POST"
   });
 

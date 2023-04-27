@@ -10,6 +10,7 @@ export default async function handler(
     try {
 
         let patientinfo = await req.body as PatientInfo;
+        console.log("Executing workflow client ")
         let ret = await runWorkflow(patientinfo);
         res.status(200).json(ret);
     }
