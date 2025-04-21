@@ -8,7 +8,18 @@ This project demonstrates how to set up a Temporal cluster on AKS with code to d
 The project is implmented in five components as desceribed here.
 
 ### docker-compose ###
-This is cloned from  
+This is cloned from the Temporal [docker-compose](https://github.com/temporalio/docker-compose) project. It is used to stand up a local Temporal cluster for development and testing. As such, it is a starting point for deploying the Temporal cluster on AKS. In order to deploy on AKS, you will first need to stand up an AKS cluster using the Terraform scripts in the terraform directory. Once the cluster is up, you can use ```kompose``` to generate the Kubernetes manifest files for the Temporal cluster.
+
+ One difference between the implementation here and the Temporal docker-compose project is the docker-compose.yml file is modified to make the Temporal service and its frontends visible from outside the cluster by adding a label to the service definition that informs ```kompose``` to create a LoadBalancer service. For example,
+
+ ![kompose code snippet showing LoadBalancer label](./images/kompose-snippet-1.png)
+
+Generate the Kubernetes manifest file using the following command,
+
+ ```
+    kompose convert -f docker-compose.yml -o ./aks/temporal-aks.yaml
+ ```
+
 
 ### express-backend ###
 This is a simple NodeJS Express project to model backend service APIs used in the workflow. The directory also contains a Dockerfile which is used to build the container image for the backend to deploy on AKS (or ACI).
@@ -23,5 +34,8 @@ A Next JS frontend app to implement the form for kicking off workflows. This pro
 This  the Terraform definition for standing up an AKS cluster for hosting in Azure. 
 
 ***TODO*** There should probably be another script in there to get the deploy up the temporal cluster, worker, backend and frontend on the AKS cluster
+
+
+Released under the [MIT License](LICENSE.md).
 
 
