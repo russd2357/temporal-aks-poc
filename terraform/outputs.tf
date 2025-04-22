@@ -40,3 +40,18 @@ output "resource_group_name" {
 output "aks_cluster_name" {
   value = azurerm_kubernetes_cluster.k8s.name
 }
+
+
+# user assigned managed identity
+output "uami_aks_client_id" {
+  value = azurerm_user_assigned_identity.uami-aks.client_id
+}
+
+output "uami_aks_principal_id" {
+  value = azurerm_user_assigned_identity.uami-aks.principal_id
+  sensitive = true
+}
+
+output "uami_aks_tenant_id" {
+  value = azurerm_user_assigned_identity.uami-aks.tenant_id
+}

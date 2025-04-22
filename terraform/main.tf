@@ -1,21 +1,22 @@
 # Generate a random suffix for naming
-resource "random_id" "rg_suffix" {
-    byte_length = 8
+resource "random_string" "rg_suffix" {
+    length = 6
+    special = false
+    upper = false
 }
 
 resource "azurerm_resource_group" "rg" {
     location    = var.resource_group_location
-    name        = "rg-temporal-aks-${random_id.rg_suffix.id}"
+    name        = "rg-${var.local_name}-${random_string.rg_suffix.id}"
+    tags = {
+        owner       = "${var.resource_group_owner }"
+    }
 }
  
-resource "random_id" "log_analytics_workspace_name_suffix" {
-    byte_length = 8
-}
-
 resource "azurerm_log_analytics_workspace" "test" {
-    location            = var.log_analytics_workspace_location
+    name                = "law-${var.local_name}-${random_string.rg_suffix.id}"
+    location            = azurerm_resource_group.rg.location
     resource_group_name = azurerm_resource_group.rg.name
-    name                = "${var.log_analytics_workspace_name}-${random_id.log_analytics_workspace_name_suffix.dec}"
     sku                 = var.log_analytics_workspace_sku
 }
 
@@ -32,37 +33,50 @@ resource "azurerm_log_analytics_solution" "test" {
     }
 }
 
-resource "azurerm_kubernetes_cluster" "k8s" {
-    location            = var.resource_group_location
-    name                = "${var.cluster_name}-${random_id.rg_suffix.id}"
-    resource_group_name = azurerm_resource_group.rg.name
-    dns_prefix          = var.dns_prefix
-    tags                = {
-        Environment = "dev"
-    }
-
-    default_node_pool {
-      name = "agentpool"
-      vm_size    = "Standard_D2_v2"
-      node_count = var.agent_count
-    
-    }
-
-    linux_profile {
-      admin_username = "ubuntu"
-
-      ssh_key {
-        key_data = file(var.ssh_public_key)
-      }
-    }
-
-    network_profile {
-      network_plugin    = "kubenet"
-      load_balancer_sku = "standard"
-    }
-
-    service_principal {
-      client_id     = var.aks_service_principal_app_id
-      client_secret = var.aks_service_principal_client_secret
-    }
+resource azurerm_user_assigned_identity "uami-aks" {
+  name                = "uami-aks-${var.local_name}-${random_string.rg_suffix.id}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
 }
+
+resource "azurerm_kubernetes_cluster" "k8s" {
+  location                         = azurerm_resource_group.rg.location
+  name                             = "aks-${var.local_name}-${random_string.rg_suffix.id}"
+  kubernetes_version               = "1.31.3"
+  resource_group_name              = azurerm_resource_group.rg.name
+  dns_prefix                       = "dns-${random_string.rg_suffix.id}"
+  http_application_routing_enabled = true
+    
+  identity {
+    type = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.uami-aks.id]
+  }
+
+  default_node_pool {
+    name       = "systempool"
+    vm_size    = var.system_node_pool_vm_size
+    node_count = var.system_node_pool_node_count
+    tags = { owner = var.resource_group_owner }
+  }
+
+  linux_profile {
+    admin_username = var.username
+
+    ssh_key {
+      key_data = azapi_resource_action.ssh_public_key_gen.output.publicKey
+    }
+  }
+
+  network_profile {
+    network_plugin    = "azure"
+    network_policy    = "cilium"
+    network_data_plane = "cilium"
+  }
+
+  web_app_routing {
+    dns_zone_ids = []
+  }
+}
+
+
+

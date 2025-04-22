@@ -1,37 +1,28 @@
-variable "agent_count" {
-  default = 3
-}
+# variable "agent_count" {
+#   default = 3
+# }
 
 # The following two variable declarations are placeholder references.
 # Set the values for these variable in terraform.tfvars
-variable "aks_service_principal_app_id" {
-  default = ""
-}
+# variable "aks_service_principal_app_id" {
+#   default = ""
+# }
 
-variable "aks_service_principal_client_secret" {
-  default = ""
-}
-
-variable "cluster_name" {
-  default = "temporalAKSCluster"
-}
+# variable "aks_service_principal_client_secret" {
+#   default = ""
+# }
 
 variable "dns_prefix" {
   default = "temporaltest"
 }
 
-
 variable "resource_group_location" {
-    default = "westus2"
+    default = "westus3"
 }
 
-variable "log_analytics_workspace_name" {
-  default = "testLogAnalyticsWorkspaceName"
-}
-
-# Refer to https://azure.microsoft.com/global-infrastructure/services/?products=monitor for available Log Analytics regions.
-variable "log_analytics_workspace_location" {
-    default = "westus"
+variable resource_group_owner {
+  default = "temporal-demo"
+  description = "owner of the resource group"
 }
 
 # Refer to https://azure.microsoft.com/pricing/details/monitor/ for Log Analytics pricing
@@ -39,11 +30,27 @@ variable "log_analytics_workspace_sku" {
   default = "PerGB2018"
 }
 
-variable "resource_group_name_prefix" {
-  default     = "rg"
-  description = "Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription."
+variable "local_name" {
+  default     = "tmprldemo"
+  description = "local name used to compose resource names"
 }
 
-variable "ssh_public_key" {
-  default = "~/.ssh/id_rsa.pub"
+variable system_node_pool_vm_size {
+  default     = "Standard_DS2_v2"
+  description = "VM size for the system node pool."
 }
+
+variable system_node_pool_node_count {
+  default     = 3
+  description = "Number of nodes in the system node pool."
+}
+
+variable "username" {
+  default     = "azureuser"
+  description = "Username for the Linux profile."
+}
+
+variable "subscription_id" {
+    description = "Azure subscription ID."
+}
+
