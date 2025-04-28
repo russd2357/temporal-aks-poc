@@ -97,6 +97,8 @@ terraform/service_principal.json
 terraform/.terraform/
 terraform/*.tfvars
 terraform/*.tfplan
+terraform/terraform.tfstate*
+terraform/.terraform.lock.hcl
 
 # We don't want to include any of the demo-app build artifacts in the repo
 demo-app/dist
