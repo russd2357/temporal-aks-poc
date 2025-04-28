@@ -1,0 +1,21 @@
+version: "3.5"
+services:
+  onboard-worker:
+    build:
+      context: .
+      target: production
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    command: node ./dist/onbworker.js
+    labels:
+      kompose.volume.type: configMap
+      kompose.service.type: headless
+    networks:
+      - temporal-worker-network
+    stdin_open: true
+    tty: true
+networks:
+  temporal-worker-network:
+    driver: bridge
+    name: temporal-worker-network
