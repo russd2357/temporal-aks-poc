@@ -7,7 +7,6 @@ items:
         kompose.cmd: kompose convert -f docker-compose.yml -o k8s/express-backend.yaml
         kompose.service.type: loadbalancer
         kompose.version: 1.22.0 (955b78124)
-      creationTimestamp: null
       labels:
         io.kompose.service: express-backend
       name: express-backend
@@ -28,7 +27,6 @@ items:
         kompose.cmd: kompose convert -f docker-compose.yml -o k8s/express-backend.yaml
         kompose.service.type: loadbalancer
         kompose.version: 1.22.0 (955b78124)
-      creationTimestamp: null
       labels:
         io.kompose.service: express-backend
       name: express-backend
@@ -44,7 +42,6 @@ items:
             kompose.cmd: kompose convert -f docker-compose.yml -o k8s/express-backend.yaml
             kompose.service.type: loadbalancer
             kompose.version: 1.22.0 (955b78124)
-          creationTimestamp: null
           labels:
             io.kompose.network/backend-network: "true"
             io.kompose.service: express-backend
@@ -60,7 +57,6 @@ items:
   - apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
-      creationTimestamp: null
       name: backend-network
     spec:
       ingress:
