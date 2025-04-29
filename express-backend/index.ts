@@ -1,11 +1,15 @@
 import express, { Application, Request, Response } from "express";
 import Router from "./routes";
+import { swaggerUi, specs } from './swagger';
 
 const app: Application = express();
 const port = 9099;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
+
+// Swagger documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 
 app.get(
     "/",
