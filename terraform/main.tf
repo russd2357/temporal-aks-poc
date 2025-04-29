@@ -78,5 +78,51 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 }
 
+resource "null_resource" "wait_for_aks" {
+  depends_on = [azurerm_kubernetes_cluster.k8s]
+
+  provisioner "local-exec" {
+    command = <<EOT
+      max_retries=10
+      retries=0
+      while [ "$(az aks show --resource-group ${azurerm_resource_group.rg.name} --name ${azurerm_kubernetes_cluster.k8s.name} --query "provisioningState" -o tsv)" != "Succeeded" ]; do
+        if [ $retries -ge $max_retries ]; then
+          echo "Max retries exceeded. Exiting..."
+          exit 1
+        fi
+        echo "Waiting for AKS cluster to be fully provisioned... (Attempt: $((retries+1)))"
+        retries=$((retries+1))
+        sleep 30
+      done
+    EOT
+  }
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "temporal" {
+  name                  = "tmprlpool"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
+  vm_size               = "Standard_D2_v4"
+  node_count            = 1
+  auto_scaling_enabled  = true
+  min_count             = 1
+  max_count             = 20
+  os_type               = "Linux"
+  os_disk_size_gb       = 50
+  mode                  = "User"
+  
+  node_labels = {
+    "app"           = "temporal"
+  }
+  
+  tags = {
+    owner = var.resource_group_owner
+  }
+  
+  # Azure best practice: Using availability zones for high availability
+  zones = [1, 2, 3]
+  
+  # Add taints if you want to dedicate this node pool to specific workloads
+  # node_taints = ["dedicated=temporal:NoSchedule"]
+}
 
 
