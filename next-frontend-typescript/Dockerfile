@@ -1,13 +1,9 @@
-FROM ubuntu:20.04
+#FROM ubuntu:20.04
+FROM node:20-bullseye
 
 WORKDIR /usr/src/app
 
 COPY package*.json .
-
-# install node
-RUN apt-get update
-RUN apt-get install -y curl gnupg
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs
 
 # get dependencies
 RUN npm install
