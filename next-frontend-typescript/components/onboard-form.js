@@ -1,6 +1,5 @@
 import  Container  from "./container";
 import styles from "../styles/onboard.module.css";
-import { PatientInfo } from "../temporal/models";
 import fetch, { Headers } from "node-fetch";
 
 export default function OnboardForm() {
@@ -20,8 +19,8 @@ export default function OnboardForm() {
             contactPref: contactpref
         };
 
-        // TODO - Change to API request
-        const res = await fetch('http://localhost:3000/api/run-workflow', {
+        // use a relative URL to call the API
+        const res = await fetch('/api/run-workflow', {
             body: JSON.stringify(patientinfo),
             method: 'POST',
             headers: new Headers({
