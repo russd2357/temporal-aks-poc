@@ -1,6 +1,5 @@
 import  Container  from "./container";
 import styles from "../styles/onboard.module.css";
-import fetch, { Headers } from "node-fetch";
 
 export default function OnboardForm() {
 
@@ -29,28 +28,15 @@ export default function OnboardForm() {
             }),
         });
 
-        let msgclone = res.clone();
-        let cloneReader = msgclone.body.getReader();
+        const data = await res.json()
 
-        let td = new TextDecoder();
-        let codedArr = await cloneReader.read();
-        let jsontxt = td.decode(codedArr.value);
-        
-        let ret = JSON.parse(jsontxt);
-
-        if (res.status == 200) {
-            
-            alert(`Workflow started workflow id: ${ret.workflowId}`);
+        if (res.ok) {            
+            alert(`Workflow started workflow id: ${data.workflowId}`);
         }
-        else if (res.status == 500)
+        else
         {
-            
-            alert(ret.message);
+            alert(data.message || `Error: ${res.status}`);
         }
-        else {
-            alert(`Unknown error status ${res.status}`);
-        }
-
     }
 
     return (

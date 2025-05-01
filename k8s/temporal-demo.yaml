@@ -109,7 +109,7 @@ spec:
       - name: temporal-backend
         image: pinaruss/temporal-demo-backend
         ports:
-        - containerPort: 8080
+        - containerPort: 9099
         resources:
           requests:
             cpu: "0.5"
@@ -130,4 +130,4 @@ spec:
     targetPort: 9099
   selector:
     app: backend
-  type: ClusterIP
+  type: LoadBalancer
