@@ -1,9 +1,9 @@
 import { Worker, NativeConnection } from '@temporalio/worker';
 import * as activities from './activities';
-import * as dotnev from 'dotenv';
+import * as dotenv from 'dotenv';
 
 // Load environment variables from .env file
-dotnev.config();
+dotenv.config();
 
 // NOTE - This example uses the DNS service in the AKS cluster for service discovery
 //        For the demo the Worker service is deployed to the same cluster as the Temporal service.
