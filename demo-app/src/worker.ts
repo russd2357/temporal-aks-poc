@@ -1,5 +1,14 @@
 import { Worker, NativeConnection } from '@temporalio/worker';
 import * as activities from './activities';
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
+
+const temporalHost = process.env.TEMPORAL_HOST || 'localhost';
+const temporalPort = process.env.TEMPORAL_PORT || '7233';
+
+
 
 async function run() {
 
@@ -11,7 +20,7 @@ async function run() {
     //        convention is <service-name>.<namespace>.svc.cluster.local
     //        In a production environment, you would implement a more robust service discovery 
     //        to find the Temporal service.
-    address: 'temporal.temporal.svc.cluster.local',
+    address: `${temporalHost}:${temporalPort}`,
     tls: {}       // TODO: When you are reeady for TLS, provide a TLSConfig here
   });
 

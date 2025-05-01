@@ -1,5 +1,12 @@
 import { Worker, NativeConnection } from '@temporalio/worker';
 import * as activities from './onboard-activities';
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
+
+const temporalHost = process.env.TEMPORAL_HOST || 'localhost';
+const temporalPort = process.env.TEMPORAL_PORT || '7233';
 
 async function run() {
   // Step 0: 
@@ -11,7 +18,7 @@ async function run() {
     //        In a production environment, you would implement a more robust service discovery 
     //        to find the Temporal service.
     //address: 'temporal.temporal.svc.cluster.local'
-    address: '52.137.103.208'
+    address: `${temporalHost}:${temporalPort}`
   });
 
   // Step 1: Register Workflows and Activities with the Worker and connect to

@@ -2,14 +2,18 @@ import { Connection, WorkflowClient } from '@temporalio/client';
 import { onboard } from './onboard-workflow';
 import { PatientInfo } from './models';
 import { nanoid } from 'nanoid';
+import * as dotenv from 'dotenv';
 
+dotenv.config();
+const temporalHost = process.env.TEMPORAL_HOST || 'localhost';
+const temporalPort = process.env.TEMPORAL_PORT || '7233';
 
 async function run() {
   // Connect to the default Server location (localhost:7233)
   const connection = await Connection.connect(
     // In production, pass options to configure TLS and other settings:
     {
-      address: '51.143.61.84',
+      address: `${temporalHost}:${temporalPort}`,
       tls: {}
     }
     );
@@ -52,7 +56,7 @@ export async function runWorkflow(patientInfo: PatientInfo) {
         //        In a production environment, you would implement a more robust service discovery 
         //        to find the Temporal service.
         //address: 'temporal.temporal.svc.cluster.local'
-        address: '52.137.103.208'
+        address: `${temporalHost}:${temporalPort}`,
       }
     );
     
