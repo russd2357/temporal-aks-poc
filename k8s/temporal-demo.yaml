@@ -1,0 +1,133 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temporal-demo-frontend
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: next-frontend
+        image: pinaruss/temporal-demo-frontend
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: "64Mi"
+          limits:
+            cpu: "1"
+            memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: temporal-demo-frontend
+spec:
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: frontend
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temporal-demo-worker
+  labels:
+    app: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+      - name: temporal-worker
+        image: pinaruss/temporal-demo-worker
+        env:
+        - name: TEMPORAL_HOST
+          value: "temporaltest-frontend.default.svc.cluster.local"
+        - name: TEMPORAL_PORT
+          value: "7233"
+        - name: BACKEND_HOST
+          value: temporal-demo-backend
+        - name: BACKEND_PORT
+          value: "9099"
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: "256Mi"
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: temporal-demo-worker
+#   labels:
+#     app: worker
+# spec:
+#   ports:
+#   - port: 80
+#     targetPort: 80
+#   selector:
+#     app: worker
+#   type: ClusterIP
+# ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temporal-demo-backend
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: temporal-backend
+        image: pinaruss/temporal-demo-backend
+        ports:
+        - containerPort: 9099
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: "128Mi"
+          limits:
+            cpu: "1"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: temporal-demo-backend
+  labels:
+    app: backend
+spec:
+  ports:
+  - port: 9099
+    targetPort: 9099
+  selector:
+    app: backend
+  type: LoadBalancer

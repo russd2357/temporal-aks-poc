@@ -1,8 +1,20 @@
 import { Worker, NativeConnection } from '@temporalio/worker';
 import * as activities from './activities';
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
+
+// NOTE - This example uses the DNS service in the AKS cluster for service discovery
+//        For the demo the Worker service is deployed to the same cluster as the Temporal service.
+
 
 async function run() {
-  // Step 0: 
+  // Step 0:
+  const temporalHost = process.env.TEMPORAL_HOST || 'localhost';
+  const temporalPort = process.env.TEMPORAL_PORT || '7233';
+
+
   const connection = await NativeConnection.connect({
     // NOTE - This example uses the DNS service in the AKS cluster for service discovery
     //        For the demo the Worker service is deployed to the same cluster as the Temporal service.
@@ -11,7 +23,7 @@ async function run() {
     //        In a production environment, you would implement a more robust service discovery 
     //        to find the Temporal service.
     //address: 'temporal.temporal.svc.cluster.local'
-    address: '52.137.103.208'
+    address: `${temporalHost}:${temporalPort}`
   });
 
   // Step 1: Register Workflows and Activities with the Worker and connect to
@@ -22,6 +34,7 @@ async function run() {
     activities,
     taskQueue: 'onboard',
   });
+  
   // Worker connects to localhost by default and uses console.error for logging.
   // Customize the Worker by passing more options to create():
   // https://typescript.temporal.io/api/classes/worker.Worker

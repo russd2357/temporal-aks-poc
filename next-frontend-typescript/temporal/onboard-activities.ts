@@ -1,11 +1,14 @@
 import fetch, { Response } from "node-fetch";
+import * as dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
 
 // all of the APIs for the demo return the same kind of object
-// we don't need special types for each one here
+// we don't need special tybapes for each one here
 interface DemoApiResponse {
   name: string
 }
-
 
 export async function greet(name: string): Promise<string> {
   return `Hello, ${name}!`;
@@ -14,13 +17,11 @@ export async function greet(name: string): Promise<string> {
 export async function assignDoctor() : Promise<string> {
   let ret = "Bogons in sight shields down!";
   
-  // NOTE - This example uses the DNS service in the AKS cluster for service discovery
-  //        For the demo the backend service is deployed to the same cluster as the frontend service.
-  //        The DNS service is not available outside of the cluster. The service naming
-  //        convention is <service-name>.<namespace>.svc.cluster.local
+  // get the backend service URL and port from environment variables
+  const serviceUrl =  process.env.BACKEND_URL || 'http://localhost';
+  const servicePort = process.env.BACKEND_PORT || '9099';
 
-  const response = await fetch('http://40.64.83.248:9099/onboard/doctor', {
-  //const response = await fetch('http://express-backend.backend.svc.cluster.local:9099/onboard/doctor', {
+  const response = await fetch(`${serviceUrl}:${servicePort}/onboard/doctor`, {
     method: "POST"
   });
 
@@ -37,13 +38,10 @@ export async function assignDoctor() : Promise<string> {
 export async function assignHospital() : Promise<string> {
   let ret = "Bogons in sight shields down!";
   
-  // NOTE - This example uses the DNS service in the AKS cluster for service discovery
-  //        For the demo the backend service is deployed to the same cluster as the frontend service.
-  //        The DNS service is not available outside of the cluster. The service naming
-  //        convention is <service-name>.<namespace>.svc.cluster.local
+  const serviceUrl =  process.env.BACKEND_URL || 'http://localhost';
+  const servicePort = process.env.BACKEND_PORT || '9099';
 
-  //const response = await fetch('http://express-backend.backend.svc.cluster.local:9099/onboard/hospital', {
-  const response = await fetch('http://40.64.83.248:9099/onboard/doctor', {
+  const response = await fetch(`${serviceUrl}:${servicePort}/onboard/hospital`, {
     method: "POST"
   });
 
@@ -64,13 +62,11 @@ export async function notifyPatient(contactinfo: string) : Promise<string> {
   // encodeURIComponent doesn't encode parentheses so we have to do those ourselves
   fmtContactInfo = fmtContactInfo.replace('(', '&#40').replace(')', '&#41');
 
-  // NOTE - This example uses the DNS service in the AKS cluster for service discovery
-  //        For the demo the backend service is deployed to the same cluster as the frontend service.
-  //        The DNS service is not available outside of the cluster. The service naming
-  //        convention is <service-name>.<namespace>.svc.cluster.local
+  // get the backend service URL and port from environment variables
+  const serviceUrl =  process.env.BACKEND_URL || 'http://localhost';
+  const servicePort = process.env.BACKEND_PORT || '9099';
 
-  const response = await fetch('http://40.64.83.248:9099:9099/onboard/notify?${fmtContactInfo}', {
-  //const response = await fetch('http://express-backend.backend.svc.cluster.local:9099/onboard/notify?${fmtContactInfo}', {
+  const response = await fetch(`${serviceUrl}:${servicePort}/onboard/notify?${fmtContactInfo}`, {
     method: "POST"
   });
 

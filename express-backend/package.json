@@ -2,19 +2,30 @@
   "name": "express-backend",
   "version": "1.0.0",
   "description": "backend services for demo",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "ts-node-dev ./index.ts"
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev ./index.ts",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "test": "jest",
+    "prepare-azure": "npm run build && npm prune --production"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/dotenv": "^8.2.3",
     "@types/express": "^4.17.14",
     "@types/node": "^18.8.2",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "express": "^4.18.1"
+    "dotenv": "^16.5.0",
+    "express": "^4.18.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

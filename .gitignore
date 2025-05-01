@@ -102,3 +102,8 @@ terraform/.terraform.lock.hcl
 
 # We don't want to include any of the demo-app build artifacts in the repo
 demo-app/dist
+demo-app/node_modules
+
+# Do not include backend build artifacts
+express-backend/dist
+express-backend/node_modules
