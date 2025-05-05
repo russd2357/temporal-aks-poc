@@ -9,12 +9,12 @@ dotenv.config();
 //        For the demo the Worker service is deployed to the same cluster as the Temporal service.
 
 
-async function run() {
+export async function run() {
   // Step 0:
   const temporalHost = process.env.TEMPORAL_HOST || 'localhost';
   const temporalPort = process.env.TEMPORAL_PORT || '7233';
 
-
+  console.log(`Connecting to Temporal server at ${temporalHost}:${temporalPort}`);
   const connection = await NativeConnection.connect({
     // NOTE - This example uses the DNS service in the AKS cluster for service discovery
     //        For the demo the Worker service is deployed to the same cluster as the Temporal service.
