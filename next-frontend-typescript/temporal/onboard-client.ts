@@ -9,8 +9,10 @@ const temporalHost = process.env.TEMPORAL_HOST || 'localhost';
 const temporalPort = process.env.TEMPORAL_PORT || '7233';
 
 async function run() {
+  console.log(`Connecting to Temporal service at ${temporalHost}:${temporalPort}`);
   // Connect to the default Server location (localhost:7233)
   const connection = await Connection.connect(
+    
     // In production, pass options to configure TLS and other settings:
     {
       address: `${temporalHost}:${temporalPort}`,
@@ -45,6 +47,8 @@ async function run() {
 }
 
 export async function runWorkflow(patientInfo: PatientInfo) {
+    
+    console.log(`Connecting to Temporal service at ${temporalHost}:${temporalPort}`);
     // Connect to the Temporal service running in AKS
     const connection = await Connection.connect( {
         // In production, pass options to configure TLS and other settings:
@@ -56,14 +60,14 @@ export async function runWorkflow(patientInfo: PatientInfo) {
         //        In a production environment, you would implement a more robust service discovery 
         //        to find the Temporal service.
         //address: 'temporal.temporal.svc.cluster.local'
-        address: `${temporalHost}:${temporalPort}`,
+        address: `${temporalHost}:${temporalPort}`
       }
     );
     
-      const client = new WorkflowClient({
-        connection,
-        // namespace: 'foo.bar', // connects to 'default' namespace if not specified
-      });
+    const client = new WorkflowClient({
+      connection,
+      // namespace: 'foo.bar', // connects to 'default' namespace if not specified
+    });
     
     const handle = await client.start(onboard, {
       // type inference works! args: [name: string]

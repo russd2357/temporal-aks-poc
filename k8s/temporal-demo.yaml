@@ -17,6 +17,11 @@ spec:
       containers:
       - name: next-frontend
         image: pinaruss/temporal-demo-frontend
+        env:
+        - name: TEMPORAL_HOST
+          value: "temporaltest-frontend.default.svc.cluster.local"
+        - name: TEMPORAL_PORT
+          value: "7233"
         ports:
         - containerPort: 3000
         resources:

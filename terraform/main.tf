@@ -45,7 +45,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   kubernetes_version               = "1.31.3"
   resource_group_name              = azurerm_resource_group.rg.name
   dns_prefix                       = "dns-${random_string.rg_suffix.id}"
-  http_application_routing_enabled = true
     
   identity {
     type = "UserAssigned"
