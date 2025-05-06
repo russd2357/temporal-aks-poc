@@ -10,20 +10,19 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@temporalio/activity": "^1.4.3",
-    "@temporalio/client": "^1.4.3",
-    "@temporalio/worker": "^1.4.3",
-    "@temporalio/workflow": "^1.4.3",
+    "@temporalio/activity": "^1.11.7",
+    "@temporalio/client": "^1.11.7",
+    "@temporalio/common": "^1.11.7",
+    "@temporalio/worker": "^1.11.7",
+    "@temporalio/workflow": "^1.11.7",
     "@tsconfig/node14": "^1.0.3",
     "dotenv": "^16.5.0",
     "next": "^15.3.1",
-    "node-fetch": "^2.6.7",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "18.11.7",
-    "@types/node-fetch": "^2.6.2",
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
     "eslint": "8.26.0",

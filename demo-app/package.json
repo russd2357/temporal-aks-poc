@@ -23,14 +23,15 @@
     ]
   },
   "dependencies": {
-    "@temporalio/activity": "^1.0.0",
-    "@temporalio/client": "^1.0.0",
-    "@temporalio/worker": "^1.0.0",
-    "@temporalio/workflow": "^1.0.0",
+    "@temporalio/activity": "^1.11.7",
+    "@temporalio/client": "^1.11.7",
+    "@temporalio/common": "^1.11.7",
+    "@temporalio/worker": "^1.11.7",
+    "@temporalio/workflow": "^1.11.7",
     "dotenv": "^16.5.0",
     "nanoid": "3.x",
     "next": "^15.3.1",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

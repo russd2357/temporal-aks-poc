@@ -29,11 +29,14 @@ export async function run() {
   try {
     // Step 1: Register Workflows and Activities with the Worker and connect to
     // the Temporal server.
+    console.log('Creating worker');
+    
     const worker = await Worker.create({
       connection: connection,
       workflowsPath: require.resolve('./onboard-workflow'),
       activities,
       taskQueue: 'onboard',
+
     });
   
     // Worker connects to localhost by default and uses console.error for logging.
