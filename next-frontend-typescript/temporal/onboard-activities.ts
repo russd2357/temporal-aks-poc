@@ -1,4 +1,4 @@
-import fetch, { Response } from "node-fetch";
+
 import * as dotenv from "dotenv";
 
 // Load environment variables

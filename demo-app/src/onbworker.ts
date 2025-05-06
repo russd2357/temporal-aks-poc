@@ -26,25 +26,33 @@ export async function run() {
     address: `${temporalHost}:${temporalPort}`
   });
 
-  // Step 1: Register Workflows and Activities with the Worker and connect to
-  // the Temporal server.
-  const worker = await Worker.create({
-    connection: connection,
-    workflowsPath: require.resolve('./onboard-workflow'),
-    activities,
-    taskQueue: 'onboard',
-  });
+  try {
+    // Step 1: Register Workflows and Activities with the Worker and connect to
+    // the Temporal server.
+    console.log('Creating worker');
+    
+    const worker = await Worker.create({
+      connection: connection,
+      workflowsPath: require.resolve('./onboard-workflow'),
+      activities,
+      taskQueue: 'onboard',
+
+    });
   
-  // Worker connects to localhost by default and uses console.error for logging.
-  // Customize the Worker by passing more options to create():
-  // https://typescript.temporal.io/api/classes/worker.Worker
-  // If you need to configure server connection parameters, see docs:
-  // https://docs.temporal.io/typescript/security#encryption-in-transit-with-mtls
+    // Worker connects to localhost by default and uses console.error for logging.
+    // Customize the Worker by passing more options to create():
+    // https://typescript.temporal.io/api/classes/worker.Worker
+    // If you need to configure server connection parameters, see docs:
+    // https://docs.temporal.io/typescript/security#encryption-in-transit-with-mtls
 
-  console.log('Connected');
+    console.log('Connected - worker created');
 
-  // Step 2: Start accepting tasks on the `onboard` queue
-  await worker.run();
+    // Step 2: Start accepting tasks on the `onboard` queue
+    await worker.run();
+  }  finally {
+    await connection.close();
+    console.log('Connection closed');
+  }
 }
 
 run().catch((err) => {

@@ -1,5 +1,5 @@
 import { proxyActivities, sleep } from '@temporalio/workflow';
-import { ActivationHandler, consumeCompletion } from '@temporalio/workflow/lib/internals';
+import { ActivationHandler } from '@temporalio/workflow/lib/internals';
 // Only import the activity types
 import type * as activities from './onboard-activities';
 import { PatientInfo } from './models';

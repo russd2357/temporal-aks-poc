@@ -1,4 +1,4 @@
-import fetch, { Response } from "node-fetch";
+import fetch from "node-fetch";
 import * as dotenv from "dotenv";
 
 // Load environment variables from .env file
@@ -25,7 +25,8 @@ export async function assignDoctor() : Promise<string> {
     throw new Error(`Error! status: ${response.status}`);
   }
 
-  ret = (await response.json()).name;
+  const responseData = await response.json() as { name: string };
+  ret = responseData.name;
 
   return ret;
 }
@@ -44,7 +45,8 @@ export async function assignHospital() : Promise<string> {
     throw new Error(`Error! status: ${response.status}`);
   }
 
-  ret = (await response.json()).name;
+  const responseData = await response.json() as { name: string };
+  ret = responseData.name;
 
   return ret;
 }
@@ -61,13 +63,14 @@ export async function notifyPatient(contactinfo: string) : Promise<string> {
   const response = await fetch(`http://${backendHost}:${backendPort}/onboard/notify?${fmtContactInfo}`, {
     method: "POST"
   });
-
   if (!response.ok)
   {
     throw new Error(`Error! status: ${response.status}`);
   }
 
-  ret = (await response.json()).message;
+  const responseData = await response.json() as { message: string };
+  ret = responseData.message;
 
+  return ret;
   return ret;
 }
